@@ -1,111 +1,101 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
+<html lang="zh-TW">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.min.css" media="screen">          
+    <link rel="manifest" href="manifest.json">    
+    <link rel="icon" sizes="192x192" href="icons/icon192.png">    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-.navbar {
-  overflow: hidden;
-  background-color: #333;
-}
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>    
+    <script>
+      $(document).ready(function() {
+        $('#myTable1').DataTable({
+          // "lengthMenu": [[10, 25, 50, -1], ["10筆", "25筆", "50筆", "全部"]], 
+          // "pageLength": 10, // 設定初始頁的筆數           
+          // "pageLength": -1, // 設定初始頁的筆(show all)
+             "lengthMenu": [[5,10, 15, 25, 50, -1], ["5筆","10筆","15筆", "25筆", "50筆", "全部"]], 
+             "pageLength": 10, // 設定初始頁的筆數 
+             "language": {
+                     "decimal":",",
+                     "thousands":"."
+                 },                                                  
+             "oLanguage": {
+                "sSearch": "全文搜索",
+                "sLengthMenu": "每頁顯示 _MENU_ 筆記錄",
+                "sZeroRecords": "抱歉， 没有找到",
+                "sInfo": "從 _START_ 到 _END_ /共 _TOTAL_ 筆記錄",
+                "sInfoEmpty": "没有記錄",
+                "sInfoFiltered": "(從 _MAX_ 筆記錄中檢索)",
+                "oPaginate": {
+                  "sFirst": "首頁",
+                  "sPrevious": "上頁",
+                  "sNext": "下頁",
+                  "sLast": "末頁"
+                  }
+              }          
+        });  
+        $('.dataTables_length').css("padding-bottom","20px"); 
+        $('.dataTables_info').css("padding-top","20px");  
+        $('.dataTables_paginate').css("padding-top","20px");         
+      });  
 
-.navbar a {
-  float: left;
-  font-size: 16px;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
+    </script>   
+    <style>
+      p {
+        margin:2px;
+      }      
+      #myTable1 {
+          font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+          border-collapse: collapse;
+          text-shadow:none;  
+          width: 100%;
+      }
 
-.dropdown {
-  float: left;
-  overflow: hidden;
-}
+      #myTable1 td, #myTable1 th {
+          border: 1px solid #ddd;
+          padding: 8px;
+      }
 
-.dropdown .dropbtn {
-  font-size: 16px;  
-  border: none;
-  outline: none;
-  color: white;
-  padding: 14px 16px;
-  background-color: inherit;
-  font-family: inherit;
-  margin: 0;
-}
+      #myTable1 tr:nth-child(even){background-color: #f2f2f2;}
 
-.navbar a:hover, .dropdown:hover .dropbtn {
-  background-color: red;
-}
+      #myTable1 tr:hover {background-color: #ddd;}
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.dropdown-content a {
-  float: none;
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
-
-.dropdown-content a:hover {
-  background-color: #ddd;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-</style>
-</head>
-<body>
-
-<div class="navbar">
-  <a href="#home">Home</a>
-  <a href="#news">News</a>
-  <div class="dropdown">
-    <button class="dropbtn">Dropdown 
-      <i class="fa fa-caret-down"></i>
-    </button>
-    <div class="dropdown-content">
-      <a href="#">Link 1</a>
-      <a href="#">Link 2</a>
-      <a href="#">Link 3</a>
+      #myTable1 th {
+          padding-top: 12px;
+          padding-bottom: 12px;
+          text-align: left;
+          background-color: #4CAF50;
+          text-shadow:none;        
+          color: black;
+      }
+    </style>     
+  </head>
+  <body>
+    <div class="row" align="center">
+       <h2>Michael 功能展示</h2>
     </div>
-  </div> 
-  <div class="dropdown">
-    <button class="dropbtn">Dropdown222 
-      <i class="fa fa-caret-down"></i>
-    </button>
-    <div class="dropdown-content">
-      <a href="#" onclick="showUrl('https' , 'www.kyc168.com.tw')">kyc</a>
-      <a href="http://michael1.cp35.secserverpros.com/" target="_blank">michale</a>
-      <a href="#">Link 3</a>
+
+    <div class="container-fluid" style="margin:30px;">
+      <table  id="myTable1">
+        <thead>
+          <tr>
+            <th>序號</th>
+            <th>程式名稱</th>
+            <th>功能說明</th>          
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+              <td></td>    
+              <td><a href="fun01.html" target="_blank">fun01.html</a></td>
+              <td>去 acsite 抓取金飾業的所有產品資料</td>           
+          </tr>          
+                                              
+        </tbody>
+      </table> 
     </div>
-  </div>   
-</div>
-
-<iframe id="iframe1" src="" width="100%" height="800px"></iframe>
-</body>
-<script>
-  function showUrl(url1 , url2){
-    var iframe1 = document.getElementById('iframe1')    
-    // alert(url1);
-    iframe1.src = "";
-    document.getElementById('iframe1').src = url1+"://"+url2;
-
-  }
-</script>
+  </body>
 </html>
