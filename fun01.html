@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">  
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <style>
   table {
     width:100%;
@@ -23,36 +24,113 @@
    background-color: #fff;
   }
   table#t01 th {
-    background-color: black;
-    color: white;
+    background-color: lemonchiffon;
+    color: black;
   }
+
+  .center {
+    margin: auto;
+    width: 60%;
+    border: 3px solid #73AD21;
+    padding: 10px;
+  }  
+
+  .loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+  }
+
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }  
 </style>
 </head>
 <body>
-   <h2>產品資料</h2>
+   <h2 align="center">產品資料</h2>
 
-   <table>
+   <table id="t01">
      <tr>
-       <th>Firstname</th>
-       <th>Lastname</th> 
-       <th>Age</th>
-     </tr>
-     <tr>
-       <td>Jill</td>
-       <td>Smith</td>
-       <td>50</td>
-     </tr>
-     <tr>
-       <td>Eve</td>
-       <td>Jackson</td>
-       <td>94</td>
-     </tr>
-     <tr>
-       <td>John</td>
-       <td>Doe</td>
-       <td>80</td>
+       <th>建檔序號</th>         
+       <th>進貨日期</th>  
+       <th>廠商代號</th>               
+       <th>產品編號</th>
+       <th>條碼編號</th> 
+       <th>中文品名</th>
+       <th>進貨數量</th>
+       <th>已銷數量</th> 
+       <th>重量(克)</th>     
      </tr>
    </table>
+   <div class="loader center"></div>   
+    <script>
+        $(document).ready(function () {
+        //   setTimeout(function(){
+        //     get_all_data();
+        //   },5000);           
+          get_all_data();
+        });     
+        function get_all_data(){
+
+        var pass0 = {};
+        pass0.target = "a00_mstock";      
+        pass0.op       = "all_data";
+        pass0.company_id = "gold001"
+
+        $.ajax({
+          url: "http://michael1.cp35.secserverpros.com/kycgoldWebPgm/kycgoldPhoneApi.php",
+          method:"POST",
+          data:pass0,
+          beforeSend:function(xhr) {
+
+            },
+          success:function(data, xhr, status) {
+              var data1 = JSON.parse(data);
+              product= data1["responseArray"];   // if  SUCCESS return content array      
+              append1(product)
+            },
+          complete:function(xhr, status) {
+              $('.loader').css('display','none');
+            },   
+          error:function(xhr, status) {
+
+            }
+        })    
+        }
+
+        function append1(product){
+          let a1 = $('table');
+                           
+          var e1 = "";
+          for (var key in product) {
+            var obj = product[key];          
+            e1 += '<tr>';
+            e1 += '      <td>'  + obj["id"]        + '</td>';                
+            e1 += '      <td>'  + obj["in_date"]   + '</td>';    
+            e1 += '      <td>'  + obj["suply_no"]  + '</td>';  
+            e1 += '      <td>'  + obj["partno"]    + '</td>';
+            e1 += '      <td>'  + obj["barcode"]   + '</td>'; 
+            e1 += '      <td>'  + obj["descrp"]    + '</td>';     
+            e1 += '      <td>'  + obj["c_qty"]     + '</td>';
+            e1 += '      <td>'  + obj["c_qty_sale"]+ '</td>';  
+            e1 += '      <td>'  + obj["weight_5"]  + '</td>';              
+            e1 += '</tr>'; 
+          } 
+          a1.append(e1);
+
+        } 
+    </script>   
 </body>
 
 </html>
