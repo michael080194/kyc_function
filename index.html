@@ -89,13 +89,25 @@
         </thead>
         <tbody>
           <tr>
-              <td></td>    
+              <td class="num"></td>    
               <td><a href="fun01.html" target="_blank">fun01.html</a></td>
               <td>去 acsite 抓取金飾業的所有產品資料</td>           
           </tr>          
-                                              
+          <tr>
+              <td class="num"></td>    
+              <td><a href="fun02.html" target="_blank">fun02.html</a></td>
+              <td>顯示 wound 照片</td>           
+          </tr>                                                  
         </tbody>
       </table> 
     </div>
   </body>
+  <script>
+
+  jQuery( ".num" ).each(function( index ) {
+      var text1 = $(this).text();
+      var xx1 = ((index+1)+'').padStart(3, "0");
+      $(this).text(xx1 + ":" + text1);
+    });
+  </script>  
 </html>
