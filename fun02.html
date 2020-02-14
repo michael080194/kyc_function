@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Wound </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        body {
+            background: var(--light);
+        }
+
+        .loader {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            z-index:3;
+            border: 4px solid var(--gray);
+            top: 50%;
+            left: 48%;
+            animation: loader 2s infinite ease;
+        }
+
+        .loader-inner {
+            vertical-align: top;
+            display: inline-block;
+            width: 100%;
+            background-color: var(--gray);
+            animation: loader-inner 2s infinite ease-in;
+        }
+
+        @keyframes loader {
+            0% {
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(180deg);
+            }
+            50% {
+                transform: rotate(180deg);
+            }
+            75% {
+                transform: rotate(360deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes loader-inner {
+            0% {
+                height: 0%;
+            }
+            25% {
+                height: 0%;
+            }
+            50% {
+                height: 100%;
+            }
+            75% {
+                height: 100%;
+            }
+            100% {
+                height: 0%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="font-weight-light text-center text-lg-left mt-4 mb-0">Wound Images</h1>
+        <hr class="mt-2 mb-5">
+        <div id="gallery" class="row text-center text-lg-left">
+            <span class="loader">
+                <span class="loader-inner"></span>
+            </span>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script>
+        const API_SRC = "http://michael1.cp35.secserverpros.com/kycgoldWebPgm/woundGetFilenames.php";
+
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: API_SRC,
+                success: function (res) {
+                    let data = JSON.parse(res);
+                    renderImages(data);
+                },
+                error: function (err) {
+                    console.log('err: ' + err);
+                }
+            });
+        });
+
+        function renderImages(filenames) {
+            let code = '';
+            let count = filenames.length;
+
+            for (let i = count - 1; i >= 0; i--) {
+                let item = filenames[i];
+                let url = 'http://michael1.cp35.secserverpros.com/kycgoldWebPgm/uploads/wound/' + item;
+                let patient = item.split('-')[0], staff = item.split('-')[1];
+                code += `
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <figure class="figure d-block mb-4 h-100">
+                            <img class="img-fluid img-thumbnail" src="${url}" alt="${item}">
+                            <figcaption class="figure-caption">
+                                被拍病患：<span class="patient">${patient}</span>
+                                <br>
+                                護理人員：<span class="staff">${staff}</span>
+                            </figcaption>
+                        </figure>
+                    </div>
+                `;
+            }
+
+            $(".loader").delay(2000).fadeOut("slow");
+
+            $('#gallery').append().delay(1500).queue(function (next) {
+                $(this).append(code);
+                next();
+            });;
+        }
+    </script>
+</body>
+</html>
