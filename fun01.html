@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">  
+<!-- <meta http-equiv="refresh" content="3">  -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -122,14 +123,27 @@
             e1 += '      <td>'  + obj["partno"]    + '</td>';
             e1 += '      <td>'  + obj["barcode"]   + '</td>'; 
             e1 += '      <td>'  + obj["descrp"]    + '</td>';     
-            e1 += '      <td>'  + obj["c_qty"]     + '</td>';
-            e1 += '      <td>'  + obj["c_qty_sale"]+ '</td>';  
+            e1 += '      <td><font size="5">'  + Math.floor(obj["c_qty"])     + '</font></td>';
+            e1 += '      <td class="setcolor"><font size="5">'  + Math.floor(obj["c_qty_sale"]) + '</font></td>';  
             e1 += '      <td>'  + obj["weight_5"]  + '</td>';              
             e1 += '</tr>'; 
           } 
           a1.append(e1);
-
+          changeColor();
         } 
+
+        function changeColor(){
+          $('.setcolor').each(function() {
+              var cellText = $(this).text();   
+              //  console.log(cellText);
+              if (cellText > 0) {
+                $(this).css("color", "red");
+              } else {
+                $(this).text("");
+              }
+          });
+
+        }
     </script>   
 </body>
 
