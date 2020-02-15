@@ -1,3 +1,3 @@
 ## Welcome to GitHub Pages
 
-https://michael080194.github.io/kyc_function/
+http://michael1.cp35.secserverpros.com/kyc_function
